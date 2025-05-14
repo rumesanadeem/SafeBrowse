@@ -1,14 +1,17 @@
-# Use the official TensorFlow image with Python 3.9
+# Use TF image with Python 3.9
 FROM tensorflow/tensorflow:2.12.0
 
-# Install any extra Python libraries you need
+# Install extra libs
 RUN pip install --no-cache-dir pandas scikit-learn tensorflowjs
 
-# Set our working directory inside the container
+# Workdir
 WORKDIR /app
 
-# Copy your training scripts and data into the container
+# Copy your training scripts & data
 COPY train.py export_tfjs.sh urls.csv ./
 
-# Make sure the export script can run
+# Ensure script is runnable
 RUN chmod +x export_tfjs.sh
+
+# Default command: train & export
+CMD ["bash", "-lc", "python train.py && bash export_tfjs.sh"]

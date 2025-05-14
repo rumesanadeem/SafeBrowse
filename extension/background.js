@@ -1,5 +1,21 @@
 // Replace with your real API key later
-const SAFE_BROWSING_KEY = 'AIzaSyDDICQ14b9GBbJPwFBzWE4o0liRdulAkIw';  
+const SAFE_BROWSING_KEY = 'AIzaSyDDICQ14b9GBbJPwFBzWE4o0liRdulAkIw'; 
+
+let customBlocklist = [];
+async function fetchCustomBlocklist() {
+  const res = await fetch('https://safe-browse-blocklist.vercel.app/blocklist');
+  const { entries } = await res.json();
+  customBlocklist = entries;
+  console.log('[Blocklist] Loaded', entries.length, 'entries');
+}
+fetchCustomBlocklist();
+setInterval(fetchCustomBlocklist, 24*60*60*1000);
+
+// In your check logic, before calling the API:
+if (customBlocklist.includes(url)) {
+  return blockTab(tabId, url);
+}
+
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     // Only fire when a navigation is starting

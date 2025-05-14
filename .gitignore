@@ -1,0 +1,16 @@
+.vercel
+# Python virtualenvs
+model/venv/
+
+# Node modules (if any)
+blocklist-service/node_modules/
+api/node_modules/
+
+# Logs
+*.log
+
+# macOS cruft
+.DS_Store
+
+# IDE/editor
+.vscode/
